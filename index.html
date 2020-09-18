@@ -1,0 +1,30 @@
+<body>
+  Method: <pre id="method"></pre>
+  Status: <pre id="status"></pre>
+  Response: <pre id="response"></pre>
+  <script>
+
+    window.request = (obj) => new Promise((resolve, reject) => { 
+      let xhr = new XMLHttpRequest();
+      xhr.open(obj.method || "GET", obj.url);
+      if (obj.headers) {
+        Object.keys(obj.headers).forEach(key => {
+          xhr.setRequestHeader(key, obj.headers[key]);
+        });
+      }
+      xhr.onload = () => resolve(xhr.response);
+      xhr.onerror = () => resolve(xhr.statusText);
+
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4) {
+          document.getElementById('response').innerText = xhr.response;
+          document.getElementById('method').innerText = xhr.method;
+          document.getElementById('status').innerText = xhr.statusText;
+        }
+      }
+
+      xhr.send(obj.body);
+    });
+
+  </script>
+</body>

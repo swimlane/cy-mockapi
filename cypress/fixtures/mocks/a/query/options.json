@@ -1,0 +1,39 @@
+[
+  {
+    "url": "/api/query?*",
+    "response": "fx:mocks/a/query/del.json",
+    "method": "DELETE"
+  },
+  {
+    "url": "/api/query?*",
+    "response": "fx:mocks/a/query/post.json",
+    "alias": "postAlias",
+    "method": "POST"
+  },
+  {
+    "url": "/api/query?*",
+    "response": { "query": "put" },
+    "method": "PUT",
+    "status": 201
+  },
+  {
+    "url": "/api/query?*",
+    "response": "fx:mocks/a/query/get.json",
+    "headers": {
+      "X-Token": "My X-Token"
+    }
+  },
+  {
+    "url": "/api/query?q=2",
+    "response": "fx:mocks/a/query/get-2.json",
+    "alias": "GET:query:2",
+    "status": 404
+  },
+  {
+    "url": "/api/query?q=3",
+    "alias": "GET:query:3",
+    "response": {
+      "redirect": "/error"
+    }
+  }
+]

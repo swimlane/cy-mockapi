@@ -1,0 +1,16 @@
+node_modules
+build
+test
+src/**.js
+.idea/*
+
+coverage
+.nyc_output
+*.log
+
+yarn.lock
+
+cypress/videos/
+cypress/screenshots/
+
+temp/

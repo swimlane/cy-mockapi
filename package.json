@@ -1,0 +1,29 @@
+{
+  "name": "cypress-mockapi",
+  "version": "1.0.0",
+  "description": "Easily mock your REST api in Cypress",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "open": "cypress open"
+  },
+  "author": "J. Harshbarger",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/glob": "^7.1.3",
+    "@types/node": "^14.11.1",
+    "cypress": "^5.2.0",
+    "typescript": "^4.0.2"
+  },
+  "dependencies": {
+    "chai-as-promised": "^7.1.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Hypercubed/cypress-mockapi.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Hypercubed/cypress-mockapi/issues"
+  },
+  "homepage": "https://github.com/Hypercubed/cypress-mockapi#readme"
+}
