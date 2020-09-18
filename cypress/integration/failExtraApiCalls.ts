@@ -22,7 +22,7 @@ describe('failExtraApiCalls', () => {
   });
 
   // @ts-ignore
-  it.fails('should fail on unmocked valid calls', function () {
+  it.fails('should fail on unmocked valid calls', () => {
     cy.request('/api/test.json').should('contain', 'The file was not found')
   });
 });

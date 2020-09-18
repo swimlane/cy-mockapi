@@ -24,27 +24,31 @@ export const installPlugin = (on: Cypress.PluginEvents, config: any) => {
       const apiPath = options.apiPath || '/api/';
       const cache = 'cache' in options ? options.cache : true;
 
-      if (cache && mocksCache.has(mocksFolder)) return mocksCache.get(mocksFolder);
+      if (cache && mocksCache.has(mocksFolder))
+        return mocksCache.get(mocksFolder);
 
       const mockFiles: Mocks[] = [];
       try {
-        glob.sync(`**/${fileGlob}.${extGlobs}`, { cwd }).forEach((path: string) => {
-          const { dir, name } = parse(path.replace(/\_\_/g, '*'));
-          let [method, alt] = name.split('-');
-          method = method.toUpperCase();
-          const response = `fx:${join(mocksFolder, path)}`;
-          const url = join(apiPath, dir);
-          const alias = alt ? `${method}:${dir}:${alt}` : `${method}:${dir}`;
+        glob
+          .sync(`**/${fileGlob}.${extGlobs}`, { cwd })
+          .forEach((path: string) => {
+            const { dir, name } = parse(path.replace(/\_\_/g, '*'));
+            // tslint:disable-next-line:prefer-const
+            let [method, alt] = name.split('-');
+            method = method.toUpperCase();
+            const response = `fx:${join(mocksFolder, path)}`;
+            const url = join(apiPath, dir);
+            const alias = alt ? `${method}:${dir}:${alt}` : `${method}:${dir}`;
 
-          mockFiles.push({
-            name,
-            alt,
-            response,
-            url,
-            method,
-            alias
+            mockFiles.push({
+              name,
+              alt,
+              response,
+              url,
+              method,
+              alias,
+            });
           });
-        });
 
         glob.sync(`**/options.json`, { cwd }).forEach((path: string) => {
           const raw = readFileSync(join(cwd, path));
@@ -53,12 +57,11 @@ export const installPlugin = (on: Cypress.PluginEvents, config: any) => {
           opts.forEach((opt: Mocks) => {
             opt.method = (opt.method || 'GET').toUpperCase();
             if (typeof opt.url === 'string' && opt.url.startsWith(apiPath)) {
-              const dir = opt.url.replace(apiPath, '');
-              opt.alias = opt.alias || `${opt.method}:${dir}`;
+              const _dir = opt.url.replace(apiPath, '');
+              opt.alias = opt.alias || `${opt.method}:${_dir}`;
             } else {
               opt.alias = opt.alias || `${opt.method}:${dir}`;
             }
-            console.log(opt.alias);
             mockFiles.push(opt);
           });
         });
@@ -67,6 +70,6 @@ export const installPlugin = (on: Cypress.PluginEvents, config: any) => {
       }
       mocksCache.set(mocksFolder, mockFiles);
       return mockFiles;
-    }
+    },
   });
 };

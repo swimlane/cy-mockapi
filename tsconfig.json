@@ -1,12 +1,23 @@
 {
   "compilerOptions": {
+    "baseUrl": "src",
     "target": "es2017",
     "lib": ["dom", "es2017"],
     "module": "commonjs",
     "strict": true,
     "types": ["cypress"],
     "esModuleInterop": true,
+    "declaration": true,
     "forceConsistentCasingInFileNames": true,
-    "typeRoots": ["node_modules/@types", "src/types"]
-  }
+    "typeRoots": ["node_modules/@types", "src/types"],
+    "outDir": "build/main",
+    "rootDir": "src",
+    "moduleResolution": "node",
+    "paths": {
+      "cypress-mockapi/*": ["*"],
+    }
+  },
+  "include": ["src/**/*.ts"],
+  "exclude": ["node_modules/**", "cypress/fixtures/**"],
+  "compileOnSave": false
 }

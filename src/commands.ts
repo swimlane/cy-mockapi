@@ -4,7 +4,7 @@ const METHODS = ['GET', 'POST', 'PUT', 'DELETE'];
  * Log when an api call is not defined
  */
 Cypress.Commands.add('logExtraApiCalls', (apiPath: string) => {
-  METHODS.forEach(method => {
+  METHODS.forEach((method) => {
     cy.route({
       url: `${apiPath}**`,
       method,
@@ -16,9 +16,9 @@ Cypress.Commands.add('logExtraApiCalls', (apiPath: string) => {
           message,
           consoleProps: () => {
             return request;
-          }
+          },
         });
-      }
+      },
     });
   });
 });
@@ -27,7 +27,7 @@ Cypress.Commands.add('logExtraApiCalls', (apiPath: string) => {
  * Fail test when api call is not defined
  */
 Cypress.Commands.add('failExtraApiCalls', (apiPath) => {
-  METHODS.forEach(method => {
+  METHODS.forEach((method) => {
     cy.route({
       url: `${apiPath}**`,
       method,
@@ -43,10 +43,10 @@ Cypress.Commands.add('failExtraApiCalls', (apiPath) => {
           ended: true,
           consoleProps: () => {
             return request;
-          }
+          },
         });
         throw new Error(message);
-      }
+      },
     });
   });
 });
@@ -58,7 +58,7 @@ Cypress.Commands.add('mockApi', (options = {}) => {
   cy.task('getMocks', options, { log: false })
     // @ts-ignore
     .then((mocks: Mocks[]) => {
-      mocks.forEach(mock => {
+      mocks.forEach((mock) => {
         cy.route(mock).as(mock.alias);
       });
     });

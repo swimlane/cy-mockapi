@@ -1,20 +1,22 @@
-// ***********************************************************
-// This example support/index.js is processed and
-// loaded automatically before your test files.
-//
-// This is a great place to put global configuration and
-// behavior that modifies Cypress.
-//
-// You can change the location of this file or turn off
-// automatically serving support files with the
-// 'supportFile' configuration option.
-//
-// You can read more here:
-// https://on.cypress.io/configuration
-// ***********************************************************
-
-// Import commands.js using ES2015 syntax:
 import './commands';
+import 'cypress-mockapi/commands';
 
-import '../../src/commands.ts';
+Cypress.on('fail', (error, runnable) => {
+  if (runnable.shouldFailWith && error.message !== runnable.shouldFailWith) {
+    return false;
+  } else {
+    throw error;
+  }
+});
+
+it.fails = function fails(title, fn, message) {
+  it(title, function() {
+    this.test.shouldFailWith = message || title + ' expected to fail';
+    fn.call(this);
+    cy.then(() => {
+      throw new Error(this.test.shouldFailWith);
+    });
+  });
+}
+
 
