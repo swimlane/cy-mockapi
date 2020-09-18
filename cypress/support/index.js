@@ -1,5 +1,6 @@
 import './commands';
 import 'cypress-mockapi/commands';
+import '@bahmutov/cy-api/support'
 
 Cypress.on('fail', (error, runnable) => {
   if (runnable.shouldFailWith && error.message !== runnable.shouldFailWith) {

@@ -1,30 +1,50 @@
-<body>
-  Method: <pre id="method"></pre>
-  Status: <pre id="status"></pre>
-  Response: <pre id="response"></pre>
+<head>
+  <style>
+    h2 {
+      margin: 1em 0 1em;
+    }
+    code {
+      text-align: left;
+      margin-top: 1em;
+      font-weight: 600;
+    }
+  </style>
   <script>
-
-    window.request = (obj) => new Promise((resolve, reject) => { 
-      let xhr = new XMLHttpRequest();
-      xhr.open(obj.method || "GET", obj.url);
-      if (obj.headers) {
-        Object.keys(obj.headers).forEach(key => {
-          xhr.setRequestHeader(key, obj.headers[key]);
-        });
-      }
-      xhr.onload = () => resolve(xhr.response);
-      xhr.onerror = () => resolve(xhr.statusText);
-
-      xhr.onreadystatechange = function () {
-        if (xhr.readyState === 4) {
-          document.getElementById('response').innerText = xhr.response;
-          document.getElementById('method').innerText = xhr.method;
-          document.getElementById('status').innerText = xhr.statusText;
+      window.request = (obj) => new Promise((resolve, reject) => { 
+        let xhr = new XMLHttpRequest();
+        xhr.open(obj.method || "GET", obj.url);
+        if (obj.headers) {
+          Object.keys(obj.headers).forEach(key => {
+            xhr.setRequestHeader(key, obj.headers[key]);
+          });
         }
-      }
+        xhr.onload = () => resolve(xhr.response);
+        xhr.onerror = () => resolve(xhr.statusText);
+  
+        xhr.onreadystatechange = function () {
+          if (xhr.readyState === 4) {
+            let response = xhr.response;
+            try {
+              response = JSON.stringify(JSON.parse(xhr.response), null, 2);
+            } catch (err) {
+              /// nop
+            }
+            document.getElementById('name').innerText = obj.method + ' ' + obj.url;
+            document.getElementById('response').innerText = response;
+            document.getElementById('status').innerText = xhr.statusText;
+            document.getElementById('request').innerText = JSON.stringify(obj, null, 2);
+          }
+        }
+  
+        xhr.send(obj.body);
+      });
+  
+    </script>
+</head>
+<body>
+  <h2>Request: <span id="name"></span></h2>
+  <code><pre id="request"></pre></code>
 
-      xhr.send(obj.body);
-    });
-
-  </script>
+  <h2>Response: <span id="status"></span></h2>
+  <code><pre id="response"></pre></code>
 </body>
