@@ -12,17 +12,21 @@ describe('failExtraApiCalls', () => {
     cy.route('/api/test/');
   });
 
-  // @ts-ignore
-  it.fails('should fail on unmocked calls', () => {
-    cy.request('/api/xxx/').should('contain', 'The file was not found');
+  it('should fail on unmocked calls', () => {
+    // @ts-ignore
+    cy.fails(() => {
+      cy.request('/api/xxx/').should('contain', 'The file was not found');
+    }, 'The GET API call to "http://localhost:63392/api/xxx/" is not mocked');
   });
 
   it('should not fail on defined routes', () => {
     cy.request('/api/test/').should('contain', 'The file was not found');
   });
 
-  // @ts-ignore
-  it.fails('should fail on unmocked valid calls', () => {
-    cy.request('/api/test.json').should('contain', 'The file was not found')
+  it('should fail on unmocked but valid calls', () => {
+    // @ts-ignore
+    cy.fails(() => {
+      cy.request('/api/test.json').should('contain', 'The file was not found');
+    }, 'The GET API call to "http://localhost:63392/api/test.json" is not mocked');
   });
 });
