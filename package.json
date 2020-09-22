@@ -22,7 +22,8 @@
     "open": "cypress open",
     "clean": "trash build test",
     "version": "chg release -y && git add -A CHANGELOG.md",
-    "np": "np"
+    "np": "np",
+    "prepack": "npm run build"
   },
   "author": "J. Harshbarger",
   "license": "MIT",

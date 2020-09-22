@@ -53,7 +53,8 @@ export const installPlugin = (on: Cypress.PluginEvents, config: any) => {
         glob.sync(`**/options.json`, { cwd }).forEach((path: string) => {
           const raw = readFileSync(join(cwd, path));
           const opts = JSON.parse(String(raw));
-          const { dir } = parse(path.replace(/\_\_/g, '*'));
+          const { dir } = parse(path);
+          const dirEscaped = dir.replace(/\_\_/g, '*');
           opts.forEach((opt: Mocks) => {
             opt.method = (opt.method || 'GET').toUpperCase();
 
@@ -63,11 +64,10 @@ export const installPlugin = (on: Cypress.PluginEvents, config: any) => {
               opt.response = `fx:${join(mocksFolder, dir, opt.response)}`;
             }
 
-            const d = dir + (opt.url || '');
-            opt.url = join(apiPath, d);
-            opt.alias = opt.alias || `${opt.method}:${d}`;
-
-            console.log(opt);
+            if (!(opt.url && opt.url.startsWith(apiPath))) {
+              opt.url = join(apiPath, dirEscaped + (opt.url || ''));
+            }
+            opt.alias = opt.alias || `${opt.method}:${opt.url.replace(apiPath, '')}`;
 
             mockFiles.push(opt);
           });
