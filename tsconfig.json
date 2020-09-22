@@ -14,7 +14,7 @@
     "rootDir": "src",
     "moduleResolution": "node",
     "paths": {
-      "@swimlane/cy-mockapi": ["./"],
+      "@swimlane/cy-mockapi": ["src"],
       "@swimlane/cy-mockapi/*": ["src/*"]
     }
   },

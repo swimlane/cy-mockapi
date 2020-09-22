@@ -56,12 +56,19 @@ export const installPlugin = (on: Cypress.PluginEvents, config: any) => {
           const { dir } = parse(path.replace(/\_\_/g, '*'));
           opts.forEach((opt: Mocks) => {
             opt.method = (opt.method || 'GET').toUpperCase();
-            if (typeof opt.url === 'string' && opt.url.startsWith(apiPath)) {
-              const _dir = opt.url.replace(apiPath, '');
-              opt.alias = opt.alias || `${opt.method}:${_dir}`;
-            } else {
-              opt.alias = opt.alias || `${opt.method}:${dir}`;
+
+            if (typeof opt.response === 'undefined') {
+              opt.response = `fx:${join(mocksFolder, dir, opt.method.toLowerCase())}`;
+            } else if (typeof opt.response === 'string' && !opt.response.startsWith('fx:') && !opt.response.startsWith('fixture:')) {
+              opt.response = `fx:${join(mocksFolder, dir, opt.response)}`;
             }
+
+            const d = dir + (opt.url || '');
+            opt.url = join(apiPath, d);
+            opt.alias = opt.alias || `${opt.method}:${d}`;
+
+            console.log(opt);
+
             mockFiles.push(opt);
           });
         });

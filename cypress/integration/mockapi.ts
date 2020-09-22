@@ -43,56 +43,77 @@ describe('mockApi', () => {
 
   describe('options', () => {
     it('query strings', () => {
-      cy.request({url: '/api/query?q=1'})
+      // Default response, default method, default url
+      cy.request({url: '/api/options'})
         .should('equal', '{"query":"get"}');
 
-      cy.request({url: '/api/query?q=2'})
+      // Default response, default method, defined url
+      cy.request({url: '/api/options?q=1'})
+        .should('equal', '{"query":"get"}');
+
+      // Defined response, default method, defined url
+      cy.request({url: '/api/options?q=2'})
         .should('equal', '{"query":"get-2"}');
 
-      cy.request({method: 'POST', url: '/api/query?q=1'})
+      cy.request({method: 'POST', url: '/api/options?q=1'})
         .should('equal', '{"query":"post"}');
 
-      cy.request({method: 'PUT', url: '/api/query?q=1'})
+      cy.request({method: 'PUT', url: '/api/options?q=1'})
         .should('equal', '{"query":"put"}');
 
-      cy.request({method: 'DELETE', url: '/api/query?q=1'})
+      cy.request({method: 'DELETE', url: '/api/options?q=1'})
         .should('equal', '{"query":"delete"}');
     });
 
     it('aliases', () => {
-      cy.request({url: '/api/query?q=1'});
-      cy.wait('@GET:query?*').its('response.body').should('deep.equal', { query: 'get' });
+      // Default alias
+      cy.request({url: '/api/options'});
+      cy.wait('@GET:options').its('response.body').should('deep.equal', { query: 'get' });
 
-      cy.request({url: '/api/query?q=2'});
-      cy.wait('@GET:query:2').its('response.body').should('deep.equal', { query: 'get-2' });
+      // Default alias
+      cy.request({url: '/api/options?q=1'});
+      cy.wait('@GET:options?q=*').its('response.body').should('deep.equal', { query: 'get' });
 
-      cy.request({method: 'POST', url: '/api/query?q=1'});
+      // Defined alias
+      cy.request({url: '/api/options?q=2'});
+      cy.wait('@GET:options:2').its('response.body').should('deep.equal', { query: 'get-2' });
+
+      // Defined alias
+      cy.request({method: 'POST', url: '/api/options?q=1'});
       cy.wait('@postAlias').its('status').should('equal', 200);
 
-      cy.request({method: 'PUT', url: '/api/query?q=1'});
-      cy.wait('@PUT:query?*').its('method').should('equal', 'PUT');
+      // Default alias
+      cy.request({method: 'PUT', url: '/api/options?q=1'});
+      cy.wait('@PUT:options?*').its('method').should('equal', 'PUT');
 
-      cy.request({method: 'DELETE', url: '/api/query?q=1'});
-      cy.wait('@DELETE:query?*').its('constructor.name').should('equal', 'XMLHttpRequest');
+      // Default alias
+      cy.request({method: 'DELETE', url: '/api/options?q=1'});
+      cy.wait('@DELETE:options?*').its('constructor.name').should('equal', 'XMLHttpRequest');
     });
 
     it('status', () => {
-      cy.request({url: '/api/query?q=1'});
-      cy.wait('@GET:query?*').its('status').should('equal', 200);
+      cy.request({url: '/api/options'});
+      cy.wait('@GET:options').its('status').should('equal', 200);
 
-      cy.request({url: '/api/query?q=2'});
-      cy.wait('@GET:query:2').its('status').should('equal', 404);
+      cy.request({url: '/api/options?q=1'});
+      cy.wait('@GET:options?q=*').its('status').should('equal', 200);
 
-      cy.request({method: 'PUT', url: '/api/query?q=1'});
-      cy.wait('@PUT:query?*').its('status').should('equal', 201);
+      cy.request({url: '/api/options?q=2'});
+      cy.wait('@GET:options:2').its('status').should('equal', 404);
+
+      cy.request({method: 'PUT', url: '/api/options?q=1'});
+      cy.wait('@PUT:options?*').its('status').should('equal', 201);
     });
 
     it('headers', () => {
-      cy.request({url: '/api/query?q=1'});
-      cy.wait('@GET:query?*').its('response.headers.x-token').should('equal', 'My X-Token');
+      cy.request({url: '/api/options'});
+      cy.wait('@GET:options').its('response.headers.x-token').should('equal', 'My X-Token');
 
-      cy.request({url: '/api/query?q=2'});
-      cy.wait('@GET:query:2').its('response.headers.x-token').should('not.exist');
+      cy.request({url: '/api/options?q=1'});
+      cy.wait('@GET:options?q=*').its('response.headers.x-token').should('not.exist');
+
+      cy.request({url: '/api/options?q=2'});
+      cy.wait('@GET:options:2').its('response.headers.x-token').should('not.exist');
     });
 
     it.skip('redirects', () => {

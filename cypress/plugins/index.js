@@ -4,8 +4,5 @@
  * @type {Cypress.PluginConfig}
  */
 module.exports = (on, config) => {
-  // `on` is used to hook into various events Cypress emits
-  // `config` is the resolved Cypress config
-
-  require('@swimlane/cy-mockapi/plugin').installPlugin(on, config);
+  require('@swimlane/cy-mockapi').installPlugin(on, config);
 }

@@ -1,0 +1,40 @@
+[
+  {
+    "headers": {
+      "X-Token": "My X-Token"
+    }
+  },
+  {
+    "url": "?q=*"
+  },
+  {
+    "url": "?q=2",
+    "response": "get-2.json",
+    "alias": "GET:options:2",
+    "status": 404
+  },
+  {
+    "url": "?q=3",
+    "alias": "GET:options:3",
+    "response": {
+      "redirect": "/error"
+    }
+  },
+  {
+    "url": "?*",
+    "response": "del.json",
+    "method": "DELETE"
+  },
+  {
+    "url": "?*",
+    "response": "post.json",
+    "alias": "postAlias",
+    "method": "POST"
+  },
+  {
+    "url": "?*",
+    "response": { "query": "put" },
+    "method": "PUT",
+    "status": 201
+  }
+]
