@@ -1,5 +1,6 @@
 import './commands';
-import 'cypress-mockapi/commands';
+import '@swimlane/cy-mockapi/commands';
+
 
 
 

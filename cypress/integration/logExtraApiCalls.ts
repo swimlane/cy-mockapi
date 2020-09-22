@@ -6,7 +6,6 @@ describe('logExtraApiCalls', () => {
   beforeEach(() => {
     cy.server();
 
-    // @ts-ignore
     cy.logExtraApiCalls('/api/');
     cy.route('/api/test/');
   });

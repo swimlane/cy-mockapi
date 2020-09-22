@@ -1,17 +1,17 @@
-# cypress-mockapi
+# @swimlane/cy-mockapi
 
 Easily mock your REST API in [Cypress](https://www.cypress.io/) by putting responses in the fixtures directory tree.
 
 ## Installation and Setup
 
 ```sh
-npm install --save-dev cypress-mockapi
+npm install --save-dev @swimlane/cy-mockapi
 ```
 
 Import and setup the plugin in `cypress/plugins/index.js`:
 
 ```js
-import { installPlugin } from 'cypress-mockapi/plugin'
+import { installPlugin } from '@swimlane/cy-mockapi/plugin'
 
 module.exports = (on, config) => {
   installPlugin(on, config);
@@ -21,7 +21,7 @@ module.exports = (on, config) => {
 Import the Cypress commands in `cypress/support/index.js`
 
 ```js
-import 'cypress-mockapi/commands';
+import '@swimlane/cy-mockapi/commands';
 ```
 
 ## Usage
@@ -65,7 +65,7 @@ describe('Some Feature', () => {
 })
 ```
 
-In this example, `cypress-mockapi` will read the `cypress/fixtures/mocks` folder and stub responses to the API requests; functionally equivalent to:
+In this example, `@swimlane/cy-mockapi` will read the `cypress/fixtures/mocks` folder and stub responses to the API requests; functionally equivalent to:
 
 ```js
 cy.route('GET', '/api/user', 'fixture:mocks/user/get.json').as('GET:user');

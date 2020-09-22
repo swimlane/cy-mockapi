@@ -55,6 +55,8 @@ Cypress.Commands.add('failExtraApiCalls', (apiPath) => {
  * Add routes
  */
 Cypress.Commands.add('mockApi', (options = {}) => {
+  Cypress.log({ name: 'Mock API' });
+
   cy.task('getMocks', options, { log: false })
     // @ts-ignore
     .then((mocks: Mocks[]) => {

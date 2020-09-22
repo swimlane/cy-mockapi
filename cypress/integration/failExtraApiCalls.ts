@@ -1,4 +1,3 @@
-
 describe('failExtraApiCalls', () => {
   before(() => {
     cy.visit('index.html');
@@ -7,13 +6,11 @@ describe('failExtraApiCalls', () => {
   beforeEach(() => {
     cy.server();
 
-    // @ts-ignore
     cy.failExtraApiCalls('/api/');
     cy.route('/api/test/');
   });
 
   it('should fail on unmocked calls', () => {
-    // @ts-ignore
     cy.fails(() => {
       cy.request('/api/xxx/').should('contain', 'The file was not found');
     }, 'The GET API call to "http://localhost:63392/api/xxx/" is not mocked');
@@ -24,7 +21,6 @@ describe('failExtraApiCalls', () => {
   });
 
   it('should fail on unmocked but valid calls', () => {
-    // @ts-ignore
     cy.fails(() => {
       cy.request('/api/test.json').should('contain', 'The file was not found');
     }, 'The GET API call to "http://localhost:63392/api/test.json" is not mocked');

@@ -6,7 +6,6 @@ describe('mockApi', () => {
   beforeEach(() => {
     cy.server();
 
-    // @ts-ignore
     cy.mockApi({
       apiPath: '/api/',
       mocksFolder: './mocks/a/',
@@ -107,7 +106,6 @@ describe('can load alternative sets', () => {
   beforeEach(() => {
     cy.server();
 
-    // @ts-ignore
     cy.mockApi({
       apiPath: '/api/',
       mocksFolder: './mocks/b/',
@@ -144,14 +142,12 @@ describe('can load multiple sets', () => {
   beforeEach(() => {
     cy.server();
 
-    // @ts-ignore
     cy.mockApi({
       apiPath: '/api/',
       mocksFolder: './mocks/a/',
       cache: true
     });
 
-    // @ts-ignore
     cy.mockApi({
       apiPath: '/api/',
       mocksFolder: './mocks/b/',

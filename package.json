@@ -1,10 +1,14 @@
 {
-  "name": "cypress-mockapi",
-  "version": "1.0.0",
+  "name": "@swimlane/cy-mockapi",
+  "version": "0.0.0",
   "description": "Easily mock your REST api in Cypress",
-  "main": "build/main/plugin.js",
-  "module": "build/module/plugin.js",
-  "typings": "build/main/index.d.ts",
+  "main": "build/main/index.js",
+  "module": "build/module/index.js",
+  "typings": "index.d.ts",
+  "files": [
+    "build",
+    "index.d.ts"
+  ],
   "scripts": {
     "build": "run-s clean && run-p build:*",
     "build:main": "tsc -p tsconfig.json",
@@ -38,6 +42,9 @@
   "dependencies": {
     "glob": "^7.1.6"
   },
+  "peerDependencies": {
+    "cypress": "^5.2.0"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Hypercubed/cypress-mockapi.git"
@@ -48,5 +55,13 @@
   "homepage": "https://github.com/Hypercubed/cypress-mockapi#readme",
   "prettier": {
     "singleQuote": true
-  }
+  },
+  "keywords": [
+    "testing",
+    "cypress",
+    "api",
+    "mock",
+    "stub",
+    "rest"
+  ]
 }
