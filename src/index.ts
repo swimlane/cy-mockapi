@@ -3,10 +3,9 @@ import { readFileSync } from 'fs';
 import * as glob from 'glob';
 
 const extGlobs = '{json,txt}';
-const fileGlob = '{get,post,put,delete}**';
+const fileGlob = '{*.,}{get,post,put,delete}**';
 
 interface Mocks {
-  name: string;
   alt: string;
   response: string;
   url: string;
@@ -32,7 +31,15 @@ export const installPlugin = (on: Cypress.PluginEvents, config: any) => {
         glob
           .sync(`**/${fileGlob}.${extGlobs}`, { cwd })
           .forEach((path: string) => {
-            const { dir, name } = parse(path.replace(/\_\_/g, '*'));
+            const unescapedPath = path
+              .replace(/\_\_/g, '*')
+              .replace(/\-\-/g, '?');
+            let { dir, name } = parse(unescapedPath);
+            if (name.includes('.')) {
+              const s = name.split('.');
+              dir += s[0];
+              name = s[1];
+            }
             // tslint:disable-next-line:prefer-const
             let [method, alt] = name.split('-');
             method = method.toUpperCase();
@@ -41,7 +48,6 @@ export const installPlugin = (on: Cypress.PluginEvents, config: any) => {
             const alias = alt ? `${method}:${dir}:${alt}` : `${method}:${dir}`;
 
             mockFiles.push({
-              name,
               alt,
               response,
               url,

@@ -21,18 +21,15 @@
     }
   },
   {
-    "url": "?*",
     "response": "del.json",
     "method": "DELETE"
   },
   {
-    "url": "?*",
     "response": "post.json",
     "alias": "postAlias",
     "method": "POST"
   },
   {
-    "url": "?*",
     "response": { "query": "put" },
     "method": "PUT",
     "status": 201

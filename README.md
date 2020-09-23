@@ -85,7 +85,7 @@ Reads and (optionally) caches the `mocksFolder` tree and sets up stubs.  Note th
 
 - `apiPath` - The API root path to mock.
 - `mocksFolder` - The fixtures folder to use.
-- `cache` - Boolean to use caching
+- `cache` - Boolean to use caching (caching is per unique `mocksFolder`)
 
 ### `cy.logExtraApiCalls`
 
@@ -101,17 +101,21 @@ Fixture files (located within `mocksFolder`) in general should be named `{method
 
 ### Wildcard slugs
 
-To match against a route with a wildcard create a directory named or containing __ in place of the wildcard.  For example, to mock the response of a GET request to `/user/*/profile`, create fixtures `user/__/profile/get.json`.
+To match against a route with a wildcard create a directory named or containing `__` in place of the wildcard.  For example, to mock the response of a GET request to `/api/user/*/profile`, create the fixture `user/__/profile/get.json`.
 
-### `option` files
+### Query string parameters
+
+To match against Query string parameters create a directory or file containing `--` in place of the `?`.  For example, to mock the response of a GET request to `/api/user?id=1`, create fixture `user--id=1/get.json` or `user/--id=1.get.json`.
+
+### `options` files
 
 For additional flexibility create `options.json` files within the `apiPath`.  These files are read by `cy.mockApi` and passed to `cy.route`.  For example, the following file:
 
 ```json
 [
   {
-    "url": "/api/user?userid=*",
-    "response": "fx:mocks/a/query/delete-user.json",
+    "url": "user?userid=*",
+    "response": "delete-user.json",
     "method": "DELETE",
     "alias": "deleteUser",
   }
@@ -123,11 +127,13 @@ will setup file following route and stubbing:
 ```js
 cy.route({
   url: '/api/user?userid=*',
-  response: 'fx:mocks/a/query/delete-user.json',
+  response: 'fx:mocks/delete-user.json',
   method: 'DELETE',
 }).as('deleteUser');
 ```
 
-See the (Cypress Documentation)[https://docs.cypress.io/api/commands/route.html#Arguments] for more details on the options available.
+See the [Cypress Documentation](https://docs.cypress.io/api/commands/route.html#Arguments) for more details on the options available.
 
 ## Credits
+
+`cy-mockapi` is a [Swimlane](http://swimlane.com/) open-source project; we believe in giving back to the open-source community by sharing some of the projects we build for our application. Swimlane is an automated cyber security operations and incident response platform that enables cyber security teams to leverage threat intelligence, speed up incident response and automate security operations.

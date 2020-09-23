@@ -41,8 +41,25 @@ describe('mockApi', () => {
       .should('equal', '{"catch":"delete"}');
   });
 
+  it('query strings', () => {
+    cy.request({url: '/api/query/string?q=1'})
+      .should('equal', '{"query":"get"}');
+
+    cy.request({url: '/api/query/string?q=2'})
+      .should('equal', '{"query":"get-2"}');
+
+    cy.request({method: 'POST', url: '/api/query/string?q=3'})
+      .should('equal', '{"query":"post"}');
+
+    cy.request({method: 'PUT', url: '/api/query/string?q=4'})
+      .should('equal', '{"query":"put"}');
+
+    cy.request({method: 'DELETE', url: '/api/query/string?q=5'})
+      .should('equal', '{"query":"delete"}');
+  });
+
   describe('options', () => {
-    it('query strings', () => {
+    it('defaults', () => {
       // Default response, default method, default url
       cy.request({url: '/api/options'})
         .should('equal', '{"query":"get"}');
@@ -55,13 +72,13 @@ describe('mockApi', () => {
       cy.request({url: '/api/options?q=2'})
         .should('equal', '{"query":"get-2"}');
 
-      cy.request({method: 'POST', url: '/api/options?q=1'})
+      cy.request({method: 'POST', url: '/api/options'})
         .should('equal', '{"query":"post"}');
 
-      cy.request({method: 'PUT', url: '/api/options?q=1'})
+      cy.request({method: 'PUT', url: '/api/options'})
         .should('equal', '{"query":"put"}');
 
-      cy.request({method: 'DELETE', url: '/api/options?q=1'})
+      cy.request({method: 'DELETE', url: '/api/options'})
         .should('equal', '{"query":"delete"}');
     });
 
@@ -79,16 +96,16 @@ describe('mockApi', () => {
       cy.wait('@GET:options:2').its('response.body').should('deep.equal', { query: 'get-2' });
 
       // Defined alias
-      cy.request({method: 'POST', url: '/api/options?q=1'});
+      cy.request({method: 'POST', url: '/api/options'});
       cy.wait('@postAlias').its('status').should('equal', 200);
 
       // Default alias
-      cy.request({method: 'PUT', url: '/api/options?q=1'});
-      cy.wait('@PUT:options?*').its('method').should('equal', 'PUT');
+      cy.request({method: 'PUT', url: '/api/options'});
+      cy.wait('@PUT:options').its('method').should('equal', 'PUT');
 
       // Default alias
-      cy.request({method: 'DELETE', url: '/api/options?q=1'});
-      cy.wait('@DELETE:options?*').its('constructor.name').should('equal', 'XMLHttpRequest');
+      cy.request({method: 'DELETE', url: '/api/options'});
+      cy.wait('@DELETE:options').its('constructor.name').should('equal', 'XMLHttpRequest');
     });
 
     it('status', () => {
@@ -101,8 +118,8 @@ describe('mockApi', () => {
       cy.request({url: '/api/options?q=2'});
       cy.wait('@GET:options:2').its('status').should('equal', 404);
 
-      cy.request({method: 'PUT', url: '/api/options?q=1'});
-      cy.wait('@PUT:options?*').its('status').should('equal', 201);
+      cy.request({method: 'PUT', url: '/api/options'});
+      cy.wait('@PUT:options').its('status').should('equal', 201);
     });
 
     it('headers', () => {

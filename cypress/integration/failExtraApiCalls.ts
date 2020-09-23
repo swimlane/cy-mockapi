@@ -13,7 +13,7 @@ describe('failExtraApiCalls', () => {
   it('should fail on unmocked calls', () => {
     cy.fails(() => {
       cy.request('/api/xxx/').should('contain', 'The file was not found');
-    }, 'The GET API call to "http://localhost:63392/api/xxx/" is not mocked');
+    }, '/api/xxx/" is not mocked');
   });
 
   it('should not fail on defined routes', () => {
@@ -23,6 +23,6 @@ describe('failExtraApiCalls', () => {
   it('should fail on unmocked but valid calls', () => {
     cy.fails(() => {
       cy.request('/api/test.json').should('contain', 'The file was not found');
-    }, 'The GET API call to "http://localhost:63392/api/test.json" is not mocked');
+    }, '/api/test.json" is not mocked');
   });
 });
