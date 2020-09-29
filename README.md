@@ -101,11 +101,11 @@ Fixture files (located within `mocksFolder`) in general should be named `{method
 
 ### Wildcard slugs
 
-To match against a route with a wildcard create a directory named or containing `__` in place of the wildcard.  For example, to mock the response of a GET request to `/api/user/*/profile`, create the fixture `user/__/profile/get.json`.
+To match against a route with a wildcard create a directory named or containing `__` (double underscore) in place of the wildcard (`*`).  For example, to mock the response of a GET request to `/api/user/*/profile`, create the fixture `user/__/profile/get.json`.
 
 ### Query string parameters
 
-To match against Query string parameters create a directory or file containing `--` in place of the `?`.  For example, to mock the response of a GET request to `/api/user?id=1`, create fixture `user--id=1/get.json` or `user/--id=1.get.json`.
+To match against Query string parameters create a directory or file containing `--` (double hyphen) in place of the `?`.  For example, to mock the response of a GET request to `/api/user?id=1`, create fixture `user--id=1/get.json` or `user/--id=1.get.json`.
 
 ### `options` files
 
@@ -133,6 +133,10 @@ cy.route({
 ```
 
 See the [Cypress Documentation](https://docs.cypress.io/api/commands/route.html#Arguments) for more details on the options available.
+
+## Acknowledgements
+
+Inspired in part by https://github.com/namshi/mockserver.
 
 ## Credits
 
