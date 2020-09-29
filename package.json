@@ -1,7 +1,7 @@
 {
   "name": "@swimlane/cy-mockapi",
   "version": "0.0.0",
-  "description": "Easily mock your REST api in Cypress",
+  "description": "Easily mock your REST API in Cypress using fixtures",
   "main": "build/main/index.js",
   "module": "build/module/index.js",
   "typings": "index.d.ts",
@@ -48,12 +48,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Hypercubed/cypress-mockapi.git"
+    "url": "git+https://github.com/swimlane/cypress-mockapi.git"
   },
   "bugs": {
-    "url": "https://github.com/Hypercubed/cypress-mockapi/issues"
+    "url": "https://github.com/swimlane/cypress-mockapi/issues"
   },
-  "homepage": "https://github.com/Hypercubed/cypress-mockapi#readme",
+  "homepage": "https://github.com/swimlane/cypress-mockapi#readme",
   "prettier": {
     "singleQuote": true
   },
