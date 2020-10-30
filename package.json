@@ -1,6 +1,6 @@
 {
   "name": "@swimlane/cy-mockapi",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Easily mock your REST API in Cypress using fixtures",
   "main": "build/main/index.js",
   "module": "build/module/index.js",
