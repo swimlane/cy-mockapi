@@ -2,7 +2,7 @@ CHANGELOG
 =========
 
 ## HEAD (Unreleased)
-* Improved command logging
+_(none)_
 
 ---
 

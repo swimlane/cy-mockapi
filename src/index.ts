@@ -65,15 +65,24 @@ export const installPlugin = (on: Cypress.PluginEvents, config: any) => {
             opt.method = (opt.method || 'GET').toUpperCase();
 
             if (typeof opt.response === 'undefined') {
-              opt.response = `fx:${join(mocksFolder, dir, opt.method.toLowerCase())}`;
-            } else if (typeof opt.response === 'string' && !opt.response.startsWith('fx:') && !opt.response.startsWith('fixture:')) {
+              opt.response = `fx:${join(
+                mocksFolder,
+                dir,
+                opt.method.toLowerCase()
+              )}`;
+            } else if (
+              typeof opt.response === 'string' &&
+              !opt.response.startsWith('fx:') &&
+              !opt.response.startsWith('fixture:')
+            ) {
               opt.response = `fx:${join(mocksFolder, dir, opt.response)}`;
             }
 
             if (!(opt.url && opt.url.startsWith(apiPath))) {
               opt.url = join(apiPath, dirEscaped + (opt.url || ''));
             }
-            opt.alias = opt.alias || `${opt.method}:${opt.url.replace(apiPath, '')}`;
+            opt.alias =
+              opt.alias || `${opt.method}:${opt.url.replace(apiPath, '')}`;
 
             mockFiles.push(opt);
           });
