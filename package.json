@@ -48,12 +48,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/swimlane/cypress-mockapi.git"
+    "url": "git+https://github.com/swimlane/cy-mockapi.git"
   },
   "bugs": {
-    "url": "https://github.com/swimlane/cypress-mockapi/issues"
+    "url": "https://github.com/swimlane/cy-mockapi/issues"
   },
-  "homepage": "https://github.com/swimlane/cypress-mockapi#readme",
+  "homepage": "https://github.com/swimlane/cy-mockapi#readme",
   "prettier": {
     "singleQuote": true
   },
