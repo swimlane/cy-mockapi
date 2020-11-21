@@ -17,7 +17,7 @@ export const installPlugin = (on: Cypress.PluginEvents, config: any) => {
   const mocksCache = new Map<string, Mocks[]>();
 
   on('task', {
-    async getMocks(options) {
+    getMocks: async (options) => {
       const mocksFolder = options.mocksFolder || 'mocks';
       const cwd = resolve(config.fixturesFolder, mocksFolder);
       const apiPath = options.apiPath || '/api/';
@@ -40,8 +40,9 @@ export const installPlugin = (on: Cypress.PluginEvents, config: any) => {
               dir += s[0];
               name = s[1];
             }
-            // tslint:disable-next-line:prefer-const
-            let [method, alt] = name.split('-');
+            const sp = name.split('-');
+            let method = sp[0];
+            const alt = sp[1];
             method = method.toUpperCase();
             const response = `fx:${join(mocksFolder, path)}`;
             const url = join(apiPath, dir);
