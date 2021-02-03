@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+
 const METHODS = ['GET', 'POST', 'PUT', 'DELETE'];
 
 /**
@@ -32,8 +34,7 @@ Cypress.Commands.add('failExtraApiCalls', (apiPath) => {
       url: `${apiPath}**`,
       method,
       status: 404,
-      onRequest: (request: XMLHttpRequest) => {
-        // @ts-ignore
+      onRequest: (request) => {
         const message = `The ${request.method} API call to "${request.url}" is not mocked`;
         Cypress.log({
           name: 'failExtraApiCalls',

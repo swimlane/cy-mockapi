@@ -13,11 +13,24 @@ interface Mocks {
   alias: string;
 }
 
-export const installPlugin = (on: Cypress.PluginEvents, config: any) => {
+export interface Config {
+  fixturesFolder: string;
+}
+
+export interface Options {
+  mocksFolder: string;
+  apiPath: string;
+  cache: boolean;
+}
+
+export const installPlugin = (
+  on: Cypress.PluginEvents,
+  config: Config
+): void => {
   const mocksCache = new Map<string, Mocks[]>();
 
   on('task', {
-    getMocks: async (options) => {
+    getMocks: async (options: Partial<Options>) => {
       const mocksFolder = options.mocksFolder || 'mocks';
       const cwd = resolve(config.fixturesFolder, mocksFolder);
       const apiPath = options.apiPath || '/api/';
@@ -31,9 +44,7 @@ export const installPlugin = (on: Cypress.PluginEvents, config: any) => {
         glob
           .sync(`**/${fileGlob}.${extGlobs}`, { cwd })
           .forEach((path: string) => {
-            const unescapedPath = path
-              .replace(/\_\_/g, '*')
-              .replace(/\-\-/g, '?');
+            const unescapedPath = path.replace(/__/g, '*').replace(/--/g, '?');
             let { dir, name } = parse(unescapedPath);
             if (name.includes('.')) {
               const s = name.split('.');
@@ -57,11 +68,11 @@ export const installPlugin = (on: Cypress.PluginEvents, config: any) => {
             });
           });
 
-        glob.sync(`**/options.json`, { cwd }).forEach((path: string) => {
+        glob.sync('**/options.json', { cwd }).forEach((path: string) => {
           const raw = readFileSync(join(cwd, path));
           const opts = JSON.parse(String(raw));
           const { dir } = parse(path);
-          const dirEscaped = dir.replace(/\_\_/g, '*');
+          const dirEscaped = dir.replace(/__/g, '*');
           opts.forEach((opt: Mocks) => {
             opt.method = (opt.method || 'GET').toUpperCase();
 
