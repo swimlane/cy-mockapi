@@ -1,37 +1,64 @@
 [
   {
-    "headers": {
-      "X-Token": "My X-Token"
+    "handler": {
+      "fixture": "get-1.json",
+      "headers": {
+        "X-Token": "My X-Token"
+      }
     }
   },
   {
-    "url": "?q=*"
+    "matcher": {
+      "url": "?q=*"
+    },
+    "handler": {
+      "fixture": "get-1.json"
+    }
   },
   {
-    "url": "?q=2",
-    "response": "get-2.json",
-    "alias": "GET:options:2",
-    "status": 404
+    "matcher": {
+      "url": "?q=2"
+    },
+    "handler": {
+      "fixture": "get-2.json",
+      "statusCode": 404
+    },
+    "alias": "get-options-2"
   },
   {
-    "url": "?q=3",
+    "matcher": {
+      "url": "?q=3"
+    },
     "alias": "GET:options:3",
-    "response": {
-      "redirect": "/error"
+    "handler": {
+      "redirect": "/error",
+      "fixture": "get-1.json"
     }
   },
   {
-    "response": "del.json",
-    "method": "DELETE"
+    "matcher": {
+      "method": "DELETE"
+    },
+    "handler": {
+      "fixture": "del.json"
+    }
   },
   {
-    "response": "post.json",
-    "alias": "postAlias",
-    "method": "POST"
+    "matcher": {
+      "method": "POST"
+    },
+    "handler": {
+      "fixture": "post.json"
+    },
+    "alias": "postAlias"
   },
   {
-    "response": { "query": "put" },
-    "method": "PUT",
-    "status": 201
+    "matcher": {
+      "method": "PUT"
+    },
+    "handler": {
+      "body": { "query": "put" },
+      "statusCode": 201
+    }
   }
 ]

@@ -6,11 +6,15 @@ describe('getMocks', () => {
     }, { log: false })
     .then(mocks => {
       expect(mocks).to.have.length(4);
-      expect(mocks[0]).to.deep.equal({ 
+      expect(mocks[0]).to.deep.equal({
+        matcher: {
+          method: "DELETE",
+          url: "/api/test"
+        },
+        handler: {
+          fixture: "mocks/b/test/delete.json",
+        },
         alias: "DELETE:test",
-        method: "DELETE",
-        response: "fx:mocks/b/test/delete.json",
-        url: "/api/test",
       });
     });
   });
@@ -22,12 +26,16 @@ describe('getMocks', () => {
     }, { log: false })
     .then(mocks => {
       expect(mocks).to.have.length(2);
-      expect(mocks[0]).to.deep.equal({ 
+      expect(mocks[0]).to.deep.equal({
+        matcher: {
+          method: "GET",
+          url: "/api/"
+        },
+        handler: {
+          fixture: "mocks/a/alt/get-alternative.json",
+        },
         alias: "GET::alternative",
-        alt: 'alternative',
-        method: "GET",
-        response: "fx:mocks/a/alt/get-alternative.json",
-        url: "/api/",
+        alt: 'alternative'
       });
     });
   });
@@ -39,11 +47,15 @@ describe('getMocks', () => {
     }, { log: false })
     .then(mocks => {
       expect(mocks).to.have.length(5);
-      expect(mocks[0]).to.deep.equal({ 
-        alias: "DELETE:string?q=*",
-        method: "DELETE",
-        response: "fx:mocks/a/query/string/--q=__.delete.json",
-        url: "/api/string?q=*",
+      expect(mocks[0]).to.deep.equal({
+        matcher: {
+          method: "DELETE",
+          url: "/api/string?q=*",
+        },
+        handler: {
+          fixture: "mocks/a/query/string/--q=__.delete.json",
+        },
+        alias: "DELETE:string?q=*"
       });
     });
   });
@@ -56,10 +68,14 @@ describe('getMocks', () => {
     .then(mocks => {
       expect(mocks).to.have.length(4);
       expect(mocks[0]).to.deep.equal({ 
-        alias: "DELETE:*",
-        method: "DELETE",
-        response: "fx:mocks/a/catch/__/delete.json",
-        url: "/api/*",
+        matcher: {
+          method: "DELETE",
+          url: "/api/*",
+        },
+        handler: {
+          fixture: "mocks/a/catch/__/delete.json",
+        },
+        alias: "DELETE:*"
       });
     });
   });
