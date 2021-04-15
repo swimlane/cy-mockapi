@@ -1,7 +1,10 @@
 import { resolve, parse, join } from 'path';
 import { readFileSync } from 'fs';
 import * as glob from 'glob';
-import { GenericStaticResponse, RouteMatcherOptionsGeneric } from 'cypress/types/net-stubbing';
+import {
+  GenericStaticResponse,
+  RouteMatcherOptionsGeneric,
+} from 'cypress/types/net-stubbing';
 
 const extGlobs = '{json,txt}';
 const fileGlob = '{*.,}{get,post,put,delete}**';
@@ -9,8 +12,8 @@ interface Mocks {
   alt: string;
   alias: string;
 
-  matcher: RouteMatcherOptionsGeneric<string>,
-  handler: GenericStaticResponse<string, string>
+  matcher: RouteMatcherOptionsGeneric<string>;
+  handler: GenericStaticResponse<string, string>;
 }
 
 export interface Config {
@@ -64,11 +67,11 @@ export const installPlugin = (
             alias,
             matcher: {
               method,
-              url
+              url,
             },
             handler: {
-              fixture
-            }
+              fixture,
+            },
           });
         });
 
@@ -92,14 +95,10 @@ export const installPlugin = (
           }
 
           if (!handler.body && !handler.fixture) {
-            handler.fixture = matcher.method.toLowerCase()
+            handler.fixture = matcher.method.toLowerCase();
           }
           if (handler.fixture) {
-            handler.fixture = join(
-              mocksFolder,
-              dir,
-              handler.fixture
-            );
+            handler.fixture = join(mocksFolder, dir, handler.fixture);
           }
 
           opt.alias ||= `${matcher.method}:${matcher.url.replace(apiPath, '')}`;
