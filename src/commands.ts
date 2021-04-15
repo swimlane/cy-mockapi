@@ -66,7 +66,14 @@ Cypress.Commands.add('mockApi', (options = {}) => {
     // @ts-ignore
     .then((mocks: Mocks[]) => {
       mocks.forEach((mock) => {
-        cy.intercept(mock.matcher, mock.handler).as(mock.alias);
+        cy.intercept(mock.matcher, (req) => {
+          req.alias = mock.alias;
+          if (mock.handler.redirect) {
+            req.redirect(mock.handler.redirect);
+          } else {
+            req.reply(mock.handler);
+          }
+        });
       });
     });
 });

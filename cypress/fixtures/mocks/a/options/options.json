@@ -1,7 +1,7 @@
 [
   {
     "handler": {
-      "fixture": "get-1.json",
+      "fixture": "get.json",
       "headers": {
         "X-Token": "My X-Token"
       }
@@ -10,9 +10,6 @@
   {
     "matcher": {
       "url": "?q=*"
-    },
-    "handler": {
-      "fixture": "get-1.json"
     }
   },
   {
@@ -31,8 +28,7 @@
     },
     "alias": "GET:options:3",
     "handler": {
-      "redirect": "/error",
-      "fixture": "get-1.json"
+      "redirect": "/api/error.json"
     }
   },
   {

@@ -70,6 +70,10 @@ describe('mockApi', () => {
       cy.request({url: '/api/options?q=2'})
         .should('equal', '{"query":"get-2"}');
 
+      // Redirect
+      cy.request({url: '/api/options?q=3'})
+        .should('equal', '{ "hello": "error" }');
+
       cy.request({method: 'POST', url: '/api/options'})
         .should('equal', '{"query":"post"}');
 
@@ -94,6 +98,10 @@ describe('mockApi', () => {
       cy.wait('@get-options-2').its('response.body').should('deep.equal', { query: 'get-2' });
 
       // Defined alias
+      cy.request({url: '/api/options?q=3'});
+      cy.wait('@GET:options:3').its('response.statusCode').should('equal', 302);
+
+      // Defined alias
       cy.request({method: 'POST', url: '/api/options'});
       cy.wait('@postAlias').its('response.statusCode').should('equal', 200);
 
@@ -107,14 +115,17 @@ describe('mockApi', () => {
     });
 
     it('statusCode', () => {
-      // cy.request({url: '/api/options'});
-      // cy.wait('@GET:options').its('response.statusCode').should('equal', 200);
+      cy.request({url: '/api/options'});
+      cy.wait('@GET:options').its('response.statusCode').should('equal', 200);
 
       cy.request({url: '/api/options?q=1'});
       cy.wait('@GET:options?q=*').its('response.statusCode').should('equal', 200);
 
       cy.request({url: '/api/options?q=2'});
       cy.wait('@get-options-2').its('response.statusCode').should('equal', 404);
+
+      cy.request({url: '/api/options?q=3'});
+      cy.wait('@GET:options:3').its('response.statusCode').should('equal', 302);
 
       cy.request({method: 'PUT', url: '/api/options'});
       cy.wait('@PUT:options').its('response.statusCode').should('equal', 201);
@@ -129,11 +140,6 @@ describe('mockApi', () => {
 
       cy.request({url: '/api/options?q=2'});
       cy.wait('@get-options-2').its('response.headers.x-token').should('not.exist');
-    });
-
-    it.skip('redirects', () => {
-      cy.request({url: '/api/query?q=3'});
-      cy.wait('@abc').its('status').should('equal', 503);
     });
   });
 });
