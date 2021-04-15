@@ -69,7 +69,7 @@ Cypress.Commands.add('mockApi', (options = {}) => {
         cy.intercept(mock.matcher, (req) => {
           req.alias = mock.alias;
           if (mock.handler.redirect) {
-            req.redirect(mock.handler.redirect);
+            req.redirect(mock.handler.redirect, mock.handler.statusCode);
           } else {
             req.reply(mock.handler);
           }

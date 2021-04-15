@@ -28,7 +28,8 @@
     },
     "alias": "GET:options:3",
     "handler": {
-      "redirect": "/api/error.json"
+      "redirect": "/api/error.json",
+      "statusCode": 307
     }
   },
   {

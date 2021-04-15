@@ -99,7 +99,7 @@ describe('mockApi', () => {
 
       // Defined alias
       cy.request({url: '/api/options?q=3'});
-      cy.wait('@GET:options:3').its('response.statusCode').should('equal', 302);
+      cy.wait('@GET:options:3').its('response.headers.location').should('equal', '/api/error.json');
 
       // Defined alias
       cy.request({method: 'POST', url: '/api/options'});
@@ -125,7 +125,7 @@ describe('mockApi', () => {
       cy.wait('@get-options-2').its('response.statusCode').should('equal', 404);
 
       cy.request({url: '/api/options?q=3'});
-      cy.wait('@GET:options:3').its('response.statusCode').should('equal', 302);
+      cy.wait('@GET:options:3').its('response.statusCode').should('equal', 307);
 
       cy.request({method: 'PUT', url: '/api/options'});
       cy.wait('@PUT:options').its('response.statusCode').should('equal', 201);
