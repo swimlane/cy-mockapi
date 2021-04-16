@@ -88,7 +88,9 @@ export const installPlugin = (
               !opt.response.startsWith('fx:') &&
               !opt.response.startsWith('fixture:')
             ) {
-              opt.response = `fx:${slash(join(mocksFolder, dir, opt.response))}`;
+              opt.response = `fx:${slash(
+                join(mocksFolder, dir, opt.response)
+              )}`;
             }
 
             if (!(opt.url && opt.url.startsWith(apiPath))) {
@@ -96,7 +98,8 @@ export const installPlugin = (
             }
             opt.url = slash(opt.url);
             opt.alias =
-              opt.alias || `${opt.method}:${opt.url.replace(slash(apiPath), '')}`;
+              opt.alias ||
+              `${opt.method}:${opt.url.replace(slash(apiPath), '')}`;
 
             mockFiles.push(opt);
           });

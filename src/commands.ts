@@ -66,7 +66,6 @@ Cypress.Commands.add('mockApi', (options = {}) => {
     // @ts-ignore
     .then((mocks: Mocks[]) => {
       mocks.forEach((mock) => {
-        console.log(mock.url, mock.alias);
         cy.route(mock).as(mock.alias);
       });
     });
