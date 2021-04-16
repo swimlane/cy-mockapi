@@ -5,6 +5,7 @@ import {
   GenericStaticResponse,
   RouteMatcherOptionsGeneric,
 } from 'cypress/types/net-stubbing';
+import slash from 'slash';
 
 const extGlobs = '{json,txt}';
 const fileGlob = '{*.,}{get,post,put,delete}**';
@@ -58,8 +59,8 @@ export const installPlugin = (
           let method = sp[0];
           const alt = sp[1];
           method = method.toUpperCase();
-          const fixture = `${join(mocksFolder, path)}`;
-          const url = join(apiPath, dir);
+          const fixture = slash(join(mocksFolder, path));
+          const url = slash(join(apiPath, dir));
           const alias = alt ? `${method}:${dir}:${alt}` : `${method}:${dir}`;
 
           mockFiles.push({
@@ -93,17 +94,19 @@ export const installPlugin = (
           if (!(matcher.url && matcher.url.startsWith(apiPath))) {
             matcher.url = join(apiPath, dirEscaped + (matcher.url || ''));
           }
+          matcher.url = slash(matcher.url);
 
           if (!handler.body && !handler.fixture) {
             handler.fixture = matcher.method.toLowerCase();
           }
           if (handler.fixture) {
-            handler.fixture = join(mocksFolder, dir, handler.fixture);
+            handler.fixture = slash(join(mocksFolder, dir, handler.fixture));
           }
 
-          opt.alias ||= `${matcher.method}:${matcher.url.replace(apiPath, '')}`;
-
-          console.log(opt.alias, opt.matcher, opt.handler);
+          opt.alias ||= `${matcher.method}:${matcher.url.replace(
+            slash(apiPath),
+            ''
+          )}`;
 
           mockFiles.push(opt);
         });

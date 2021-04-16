@@ -18,7 +18,7 @@ describe('logExtraApiCalls', () => {
     cy.request('/api/test/').should('contain', 'The file was not found');
   });
 
-  it('should not interfear with exiting api', () => {
-    cy.request('/api/test.json').should('equal', '{\n  "test": "api"\n}');
+  it('should not interfere with exiting api', () => {
+    cy.request('/api/test.json').should('match', /"test": "api"/);
   });
 });
