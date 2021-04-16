@@ -19,6 +19,6 @@ describe('logExtraApiCalls', () => {
   });
 
   it('should not interfear with exiting api', () => {
-    cy.request('/api/test.json').should('equal', '{\n  "test": "api"\n}');
+    cy.request('/api/test.json').should('match', /"test": "api"/);
   });
 });

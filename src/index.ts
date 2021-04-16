@@ -1,6 +1,7 @@
 import { resolve, parse, join } from 'path';
 import { readFileSync } from 'fs';
 import * as glob from 'glob';
+import slash from 'slash';
 
 const extGlobs = '{json,txt}';
 const fileGlob = '{*.,}{get,post,put,delete}**';
@@ -55,8 +56,8 @@ export const installPlugin = (
             let method = sp[0];
             const alt = sp[1];
             method = method.toUpperCase();
-            const response = `fx:${join(mocksFolder, path)}`;
-            const url = join(apiPath, dir);
+            const response = `fx:${slash(join(mocksFolder, path))}`;
+            const url = slash(join(apiPath, dir));
             const alias = alt ? `${method}:${dir}:${alt}` : `${method}:${dir}`;
 
             mockFiles.push({
@@ -87,14 +88,15 @@ export const installPlugin = (
               !opt.response.startsWith('fx:') &&
               !opt.response.startsWith('fixture:')
             ) {
-              opt.response = `fx:${join(mocksFolder, dir, opt.response)}`;
+              opt.response = `fx:${slash(join(mocksFolder, dir, opt.response))}`;
             }
 
             if (!(opt.url && opt.url.startsWith(apiPath))) {
               opt.url = join(apiPath, dirEscaped + (opt.url || ''));
             }
+            opt.url = slash(opt.url);
             opt.alias =
-              opt.alias || `${opt.method}:${opt.url.replace(apiPath, '')}`;
+              opt.alias || `${opt.method}:${opt.url.replace(slash(apiPath), '')}`;
 
             mockFiles.push(opt);
           });
