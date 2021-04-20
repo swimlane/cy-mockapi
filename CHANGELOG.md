@@ -2,9 +2,12 @@ CHANGELOG
 =========
 
 ## HEAD (Unreleased)
-- Use `cy.intercept`
+_(none)_
 
 ---
+
+## 2.0.0 (2021-04-20)
+- Use `cy.intercept`
 
 ## 1.1.0 (2021-04-16)
 - Support windows paths
