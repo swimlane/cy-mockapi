@@ -2,7 +2,7 @@ CHANGELOG
 =========
 
 ## HEAD (Unreleased)
-_(none)_
+- Fix peerDependencies (requires Cypress v7)
 
 ---
 

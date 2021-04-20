@@ -54,7 +54,7 @@
     "slash": "^3.0.0"
   },
   "peerDependencies": {
-    "cypress": "^5.2.0"
+    "cypress": "^7.0.0"
   },
   "repository": {
     "type": "git",
