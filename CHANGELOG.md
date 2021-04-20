@@ -2,9 +2,12 @@ CHANGELOG
 =========
 
 ## HEAD (Unreleased)
-- Fix peerDependencies (requires Cypress v7)
+_(none)_
 
 ---
+
+## 2.0.1 (2021-04-20)
+- Fix peerDependencies (requires Cypress v7)
 
 ## 2.0.0 (2021-04-20)
 - Use `cy.intercept`
