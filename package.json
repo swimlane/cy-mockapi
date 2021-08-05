@@ -39,7 +39,7 @@
     "@typescript-eslint/eslint-plugin": "^4.14.2",
     "@typescript-eslint/parser": "^4.14.2",
     "chg": "^0.4.0",
-    "cypress": "^7.1.0",
+    "cypress": "^8.2.0",
     "eslint": "^7.14.0",
     "eslint-config-prettier": "^7.2.0",
     "eslint-plugin-security": "^1.4.0",
@@ -54,7 +54,7 @@
     "slash": "^3.0.0"
   },
   "peerDependencies": {
-    "cypress": "^7.0.0"
+    "cypress": "^7.0.0 || ^8.0.0"
   },
   "repository": {
     "type": "git",
