@@ -6,6 +6,9 @@ _(none)_
 
 ---
 
+## 2.0.2 (2021-11-09)
+_(none)_
+
 ## 2.0.1 (2021-04-20)
 - Fix peerDependencies (requires Cypress v7)
 
