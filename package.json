@@ -27,7 +27,7 @@
     "np": "np",
     "prepack": "npm run build",
     "audit": "run-s audit:*",
-    "audit:npm": "npm audit"
+    "audit:npm": "npm audit --production"
   },
   "author": "J. Harshbarger",
   "license": "MIT",
