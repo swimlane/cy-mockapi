@@ -5,7 +5,6 @@ env:
 extends:
   - '@swimlane/eslint-config/typescript'
   - 'prettier'
-  - 'prettier/@typescript-eslint'
 parserOptions:
   ecmaVersion: 12
   sourceType: module
