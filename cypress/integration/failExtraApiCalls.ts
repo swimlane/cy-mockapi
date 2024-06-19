@@ -4,10 +4,8 @@ describe('failExtraApiCalls', () => {
   });
 
   beforeEach(() => {
-    cy.server();
-
     cy.failExtraApiCalls('/api/');
-    cy.route('/api/test/');
+    cy.intercept('/api/test/', {});
   });
 
   it('should fail on unmocked calls', () => {
@@ -17,7 +15,7 @@ describe('failExtraApiCalls', () => {
   });
 
   it('should not fail on defined routes', () => {
-    cy.request('/api/test/').should('contain', 'The file was not found');
+    cy.request('/api/test/').should('equal', '');
   });
 
   it('should fail on unmocked but valid calls', () => {

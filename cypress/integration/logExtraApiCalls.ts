@@ -4,10 +4,8 @@ describe('logExtraApiCalls', () => {
   });
 
   beforeEach(() => {
-    cy.server();
-
     cy.logExtraApiCalls('/api/');
-    cy.route('/api/test/');
+    cy.intercept('/api/test/');
   });
 
   it('should log on undefined routes', () => {

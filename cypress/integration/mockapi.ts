@@ -7,221 +7,296 @@ describe('mockApi', () => {
     cy.mockApi({
       apiPath: '/api/',
       mocksFolder: './mocks/a/',
-      cache: false
+      cache: false,
     });
   });
 
   it('simple', () => {
-    cy.request({url: '/api/test/'})
-      .should('equal', '{"hello":"world"}');
+    cy.request({ url: '/api/test/' }).should('equal', '{"hello":"world"}');
 
-    cy.request({method: 'POST', url: '/api/test/'})
-      .should('equal', '{"hello":"post"}');
+    cy.request({ method: 'POST', url: '/api/test/' }).should(
+      'equal',
+      '{"hello":"post"}'
+    );
 
-    cy.request({method: 'PUT', url: '/api/test/'})
-      .should('equal', '{"hello":"put"}');
+    cy.request({ method: 'PUT', url: '/api/test/' }).should(
+      'equal',
+      '{"hello":"put"}'
+    );
 
-    cy.request({method: 'DELETE', url: '/api/test/'})
-      .should('equal', '{"hello":"delete"}');
+    cy.request({ method: 'DELETE', url: '/api/test/' }).should(
+      'equal',
+      '{"hello":"delete"}'
+    );
   });
 
   it('catch all', () => {
-    cy.request({url: '/api/catch/anything/'})
-      .should('equal', '{"catch":"get"}');
-
-    cy.request({method: 'POST', url: '/api/catch/at/'})
-      .should('equal', '{"catch":"post"}');
-
-    cy.request({method: 'PUT', url: '/api/catch/all/'})
-      .should('equal', '{"catch":"put"}');
-
-    cy.request({method: 'DELETE', url: '/api/catch/really/'})
-      .should('equal', '{"catch":"delete"}');
+    cy.request({ url: '/api/catch/anything/' }).should(
+      'equal',
+      '{"catch":"get"}'
+    );
+    cy.request({ method: 'POST', url: '/api/catch/at/' }).should(
+      'equal',
+      '{"catch":"post"}'
+    );
+    cy.request({ method: 'PUT', url: '/api/catch/all/' }).should(
+      'equal',
+      '{"catch":"put"}'
+    );
+    cy.request({ method: 'DELETE', url: '/api/catch/really/' }).should(
+      'equal',
+      '{"catch":"delete"}'
+    );
   });
 
   it('query strings', () => {
-    cy.request({url: '/api/query/string?q=1'})
-      .should('equal', '{"query":"get"}');
+    cy.request({ url: '/api/query/string?q=1' }).should(
+      'equal',
+      '{"query":"get"}'
+    );
 
-    cy.request({url: '/api/query/string?q=2'})
-      .should('equal', '{"query":"get-2"}');
+    cy.request({ url: '/api/query/string?q=2' }).should(
+      'equal',
+      '{"query":"get-2"}'
+    );
 
-    cy.request({method: 'POST', url: '/api/query/string?q=3'})
-      .should('equal', '{"query":"post"}');
+    cy.request({ method: 'POST', url: '/api/query/string?q=3' }).should(
+      'equal',
+      '{"query":"post"}'
+    );
 
-    cy.request({method: 'PUT', url: '/api/query/string?q=4'})
-      .should('equal', '{"query":"put"}');
+    cy.request({ method: 'PUT', url: '/api/query/string?q=4' }).should(
+      'equal',
+      '{"query":"put"}'
+    );
 
-    cy.request({method: 'DELETE', url: '/api/query/string?q=5'})
-      .should('equal', '{"query":"delete"}');
+    cy.request({ method: 'DELETE', url: '/api/query/string?q=5' }).should(
+      'equal',
+      '{"query":"delete"}'
+    );
   });
 
   describe('options', () => {
     it('defaults', () => {
       // Default response, default method, default url
-      cy.request({url: '/api/options'})
-        .should('equal', '{"query":"get"}');
+      cy.request({ url: '/api/options' }).should('equal', '{"query":"get"}');
 
       // Default response, default method, defined url
-      cy.request({url: '/api/options?q=1'})
-        .should('equal', '{"query":"get"}');
+      cy.request({ url: '/api/options?q=1' }).should(
+        'equal',
+        '{"query":"get"}'
+      );
 
       // Defined response, default method, defined url
-      cy.request({url: '/api/options?q=2'})
-        .should('equal', '{"query":"get-2"}');
+      cy.request({ url: '/api/options?q=2' }).should(
+        'equal',
+        '{"query":"get-2"}'
+      );
 
       // Redirect
-      cy.request({url: '/api/options?q=3'})
-        .should('equal', '{ "hello": "error" }');
+      cy.request({ url: '/api/options?q=3' }).should(
+        'equal',
+        '{ "hello": "error" }'
+      );
 
-      cy.request({method: 'POST', url: '/api/options'})
-        .should('equal', '{"query":"post"}');
+      cy.request({ method: 'POST', url: '/api/options' }).should(
+        'equal',
+        '{"query":"post"}'
+      );
 
-      cy.request({method: 'PUT', url: '/api/options'})
-        .should('equal', '{"query":"put"}');
+      cy.request({ method: 'PUT', url: '/api/options' }).should(
+        'equal',
+        '{"query":"put"}'
+      );
 
-      cy.request({method: 'DELETE', url: '/api/options'})
-        .should('equal', '{"query":"delete"}');
+      cy.request({ method: 'DELETE', url: '/api/options' }).should(
+        'equal',
+        '{"query":"delete"}'
+      );
     });
 
     it('aliases', () => {
       // Default alias
-      cy.request({url: '/api/options'});
-      cy.wait('@GET:options').its('response.body').should('deep.equal', { query: 'get' });
+      cy.request({ url: '/api/options' });
+      cy.wait('@GET:options')
+        .its('response.body')
+        .should('deep.equal', { query: 'get' });
 
       // Default alias
-      cy.request({url: '/api/options?q=1'});
-      cy.wait('@GET:options?q=*').its('response.body').should('deep.equal', { query: 'get' });
+      cy.request({ url: '/api/options?q=1' });
+      cy.wait('@GET:options?q=*')
+        .its('response.body')
+        .should('deep.equal', { query: 'get' });
 
       // Defined alias
-      cy.request({url: '/api/options?q=2'});
-      cy.wait('@get-options-2').its('response.body').should('deep.equal', { query: 'get-2' });
+      cy.request({ url: '/api/options?q=2' });
+      cy.wait('@get-options-2')
+        .its('response.body')
+        .should('deep.equal', { query: 'get-2' });
 
       // Defined alias
-      cy.request({url: '/api/options?q=3'});
-      cy.wait('@GET:options:3').its('response.headers.location').should('equal', '/api/error.json');
+      cy.request({ url: '/api/options?q=3' });
+      cy.wait('@GET:options:3')
+        .its('response.headers.location')
+        .should('equal', '/api/error.json');
 
       // Defined alias
-      cy.request({method: 'POST', url: '/api/options'});
+      cy.request({ method: 'POST', url: '/api/options' });
       cy.wait('@postAlias').its('response.statusCode').should('equal', 200);
 
       // Default alias
-      cy.request({method: 'PUT', url: '/api/options'});
+      cy.request({ method: 'PUT', url: '/api/options' });
       cy.wait('@PUT:options').its('request.method').should('equal', 'PUT');
 
       // Default alias
-      cy.request({method: 'DELETE', url: '/api/options'});
-      cy.wait('@DELETE:options').its('request.method').should('equal', 'DELETE');
+      cy.request({ method: 'DELETE', url: '/api/options' });
+      cy.wait('@DELETE:options')
+        .its('request.method')
+        .should('equal', 'DELETE');
     });
 
     it('statusCode', () => {
-      cy.request({url: '/api/options'});
+      cy.request({ url: '/api/options' });
       cy.wait('@GET:options').its('response.statusCode').should('equal', 200);
 
-      cy.request({url: '/api/options?q=1'});
-      cy.wait('@GET:options?q=*').its('response.statusCode').should('equal', 200);
+      cy.request({ url: '/api/options?q=1' });
+      cy.wait('@GET:options?q=*')
+        .its('response.statusCode')
+        .should('equal', 200);
 
-      cy.request({url: '/api/options?q=2'});
+      cy.request({ url: '/api/options?q=2' });
       cy.wait('@get-options-2').its('response.statusCode').should('equal', 404);
 
-      cy.request({url: '/api/options?q=3'});
+      cy.request({ url: '/api/options?q=3' });
       cy.wait('@GET:options:3').its('response.statusCode').should('equal', 307);
 
-      cy.request({method: 'PUT', url: '/api/options'});
+      cy.request({ method: 'PUT', url: '/api/options' });
       cy.wait('@PUT:options').its('response.statusCode').should('equal', 201);
     });
 
     it('headers', () => {
-      cy.request({url: '/api/options'});
-      cy.wait('@GET:options').its('response.headers.X-Token').should('equal', 'My X-Token');
+      cy.request({ url: '/api/options' });
+      cy.wait('@GET:options')
+        .its('response.headers.X-Token')
+        .should('equal', 'My X-Token');
 
-      cy.request({url: '/api/options?q=1'});
-      cy.wait('@GET:options?q=*').its('response.headers.x-token').should('not.exist');
+      cy.request({ url: '/api/options?q=1' });
+      cy.wait('@GET:options?q=*')
+        .its('response.headers.x-token')
+        .should('not.exist');
 
-      cy.request({url: '/api/options?q=2'});
-      cy.wait('@get-options-2').its('response.headers.x-token').should('not.exist');
+      cy.request({ url: '/api/options?q=2' });
+      cy.wait('@get-options-2')
+        .its('response.headers.x-token')
+        .should('not.exist');
     });
   });
 });
 
 describe('can load alternative sets', () => {
   beforeEach(() => {
-    cy.server();
-
     cy.mockApi({
       apiPath: '/api/',
       mocksFolder: './mocks/b/',
-      cache: true
+      cache: true,
     });
   });
 
   it('overides work', () => {
-    cy.request({url: '/api/test/'})
-      .should('equal', '{"hello":"world-b"}');
+    cy.request({ url: '/api/test/' }).should('equal', '{"hello":"world-b"}');
 
-    cy.request({method: 'POST', url: '/api/test/'})
-      .should('equal', '{"hello":"post-b"}');
+    cy.request({ method: 'POST', url: '/api/test/' }).should(
+      'equal',
+      '{"hello":"post-b"}'
+    );
 
-    cy.request({method: 'PUT', url: '/api/test/'})
-      .should('equal', '{"hello":"put-b"}');
+    cy.request({ method: 'PUT', url: '/api/test/' }).should(
+      'equal',
+      '{"hello":"put-b"}'
+    );
 
-    cy.request({method: 'DELETE', url: '/api/test/'}).
-      should('equal', '{"hello":"delete-b"}');
+    cy.request({ method: 'DELETE', url: '/api/test/' }).should(
+      'equal',
+      '{"hello":"delete-b"}'
+    );
   });
 
   it('other set not found', () => {
-    cy.request({url: '/api/catch/anything/'}).should('contain', 'The file was not found');
+    cy.request({ url: '/api/catch/anything/' }).should(
+      'contain',
+      'The file was not found'
+    );
 
-    cy.request({method: 'POST', url: '/api/catch/at/'}).should('contain', 'The file was not found');
+    cy.request({ method: 'POST', url: '/api/catch/at/' }).should(
+      'contain',
+      'The file was not found'
+    );
 
-    cy.request({method: 'PUT', url: '/api/catch/all/'}).should('contain', 'The file was not found');
+    cy.request({ method: 'PUT', url: '/api/catch/all/' }).should(
+      'contain',
+      'The file was not found'
+    );
 
-    cy.request({method: 'DELETE', url: '/api/catch/really/'}).should('contain', 'The file was not found');
+    cy.request({ method: 'DELETE', url: '/api/catch/really/' }).should(
+      'contain',
+      'The file was not found'
+    );
   });
 });
 
 describe('can load multiple sets', () => {
   beforeEach(() => {
-    cy.server();
-
     cy.mockApi({
       apiPath: '/api/',
       mocksFolder: './mocks/a/',
-      cache: true
+      cache: true,
     });
 
     cy.mockApi({
       apiPath: '/api/',
       mocksFolder: './mocks/b/',
-      cache: true
+      cache: true,
     });
   });
 
   it('overides work', () => {
-    cy.request({url: '/api/test/'})
-      .should('equal', '{"hello":"world-b"}');
+    cy.request({ url: '/api/test/' }).should('equal', '{"hello":"world-b"}');
 
-    cy.request({method: 'POST', url: '/api/test/'})
-      .should('equal', '{"hello":"post-b"}');
+    cy.request({ method: 'POST', url: '/api/test/' }).should(
+      'equal',
+      '{"hello":"post-b"}'
+    );
 
-    cy.request({method: 'PUT', url: '/api/test/'})
-      .should('equal', '{"hello":"put-b"}');
+    cy.request({ method: 'PUT', url: '/api/test/' }).should(
+      'equal',
+      '{"hello":"put-b"}'
+    );
 
-    cy.request({method: 'DELETE', url: '/api/test/'})
-      .should('equal', '{"hello":"delete-b"}');
+    cy.request({ method: 'DELETE', url: '/api/test/' }).should(
+      'equal',
+      '{"hello":"delete-b"}'
+    );
   });
 
   it('originals work', () => {
-    cy.request({url: '/api/catch/anything/'})
-      .should('equal', '{"catch":"get"}');
+    cy.request({ url: '/api/catch/anything/' }).should(
+      'equal',
+      '{"catch":"get"}'
+    );
 
-    cy.request({method: 'POST', url: '/api/catch/at/'})
-      .should('equal', '{"catch":"post"}');
+    cy.request({ method: 'POST', url: '/api/catch/at/' }).should(
+      'equal',
+      '{"catch":"post"}'
+    );
 
-    cy.request({method: 'PUT', url: '/api/catch/all/'})
-      .should('equal', '{"catch":"put"}');
+    cy.request({ method: 'PUT', url: '/api/catch/all/' }).should(
+      'equal',
+      '{"catch":"put"}'
+    );
 
-    cy.request({method: 'DELETE', url: '/api/catch/really/'})
-      .should('equal', '{"catch":"delete"}');
+    cy.request({ method: 'DELETE', url: '/api/catch/really/' }).should(
+      'equal',
+      '{"catch":"delete"}'
+    );
   });
 });
